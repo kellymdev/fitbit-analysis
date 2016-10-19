@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019202710) do
+ActiveRecord::Schema.define(version: 20161019213447) do
 
   create_table "activities", force: :cascade do |t|
     t.date     "date"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 20161019202710) do
     t.integer  "activity_calories"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "sleeps", force: :cascade do |t|
+    t.date     "date"
+    t.integer  "minutes_asleep"
+    t.integer  "minutes_awake"
+    t.integer  "number_of_awakenings"
+    t.integer  "time_in_bed"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
 end
