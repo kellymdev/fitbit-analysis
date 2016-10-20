@@ -3,7 +3,8 @@ require 'csv'
 
 RSpec.describe CreateDataFromFile, type: :service do
   describe '#call' do
-    let(:data_from_file) { CreateDataFromFile.new("file") }
+    let(:user) { User.create!(name: "Bob", email: "test@example.com", password: "test12") }
+    let(:data_from_file) { CreateDataFromFile.new("file", user) }
 
     before do
       expect(CSV).to receive(:foreach).and_return(row)

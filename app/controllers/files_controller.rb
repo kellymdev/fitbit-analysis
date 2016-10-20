@@ -7,7 +7,7 @@ class FilesController < ApplicationController
   def upload
     file = params[:data_file]
 
-    CreateDataFromFile.new(file.tempfile).call
+    CreateDataFromFile.new(file.tempfile, current_user).call
 
     redirect_to file_upload_path
   end
