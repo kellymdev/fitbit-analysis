@@ -34,6 +34,14 @@ class User < ApplicationRecord
     end
   end
 
+  def average_kilometres
+    if lifetime_kilometres > 0
+      (lifetime_kilometres / activities.count).round(2)
+    else
+      lifetime_kilometres
+    end
+  end
+
   def highest_floors
     activity = highest_floor_activity
 

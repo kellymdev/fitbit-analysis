@@ -170,6 +170,37 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#average_kilometres' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'returns 0' do
+        expect(user.average_kilometres).to eq(0)
+      end
+    end
+
+    context 'when no kilometres have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "0.0".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'returns 0' do
+        expect(user.average_kilometres).to eq(0)
+      end
+    end
+
+    context 'when kilometres have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'returns the average kilometres walked per day' do
+        expect(user.average_kilometres).to eq(2.63)
+      end
+    end
+  end
+
   describe '#highest_floors' do
     before { user.save! }
 
