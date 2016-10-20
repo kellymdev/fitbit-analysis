@@ -1,5 +1,7 @@
-<p>Dashboard for <%= current_user.name %></p>
+<h2>Dashboard for <%= current_user.name %></h2>
 <p>Lifetime floors: <%= current_user.lifetime_floors %></p>
 <p>Lifetime steps: <%= current_user.lifetime_steps %></p>
 <p>Lifetime kilometres: <%= current_user.lifetime_kilometres %></p>
+<p>Highest floors: <%= current_user.highest_floors %> on <%= current_user.highest_floor_date %></p>
 <p>Highest steps: <%= current_user.highest_steps %> on <%= current_user.highest_step_date %></p>
+<p>Highest kilometres: <%= current_user.highest_kilometres %> on TODO</p>

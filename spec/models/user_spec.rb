@@ -139,12 +139,116 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#highest_floors' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'returns 0' do
+        expect(user.highest_floors).to eq(0)
+      end
+    end
+
+    context 'when no floors have been climbed' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2340, distance: "1.63".to_d, floors: 0, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'returns the date of the activity' do
+        expect(user.highest_floors).to eq(0)
+      end
+    end
+
+    context 'when floors have been climbed' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'returns the highest number of floors climbed in a day' do
+        expect(user.highest_floors).to eq(17)
+      end
+    end
+  end
+
+  describe '#highest_floor_date' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'returns a no floors climbed message' do
+        expect(user.highest_floor_date).to eq("No floors recorded")
+      end
+    end
+
+    context 'when no floors have been climbed' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2340, distance: "1.63".to_d, floors: 0, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'returns the date of the activity' do
+        expect(user.highest_floor_date).to eq(Date.parse("01-10-2016"))
+      end
+    end
+
+    context 'when floors have been climbed' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'returns the date that the highest number of floors was climbed' do
+        expect(user.highest_floor_date).to eq(Date.parse("02-10-2016"))
+      end
+    end
+
+    context 'when two dates have the same number of floors climbed' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 17, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'returns the first date' do
+        expect(user.highest_floor_date).to eq(Date.parse("01-10-2016"))
+      end
+    end
+  end
+
+  describe '#highest_kilometres' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'returns 0' do
+        expect(user.highest_kilometres).to eq(0)
+      end
+    end
+
+    context 'when no kilometres have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "0.0".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'returns 0' do
+        expect(user.highest_kilometres).to eq(0)
+      end
+    end
+
+    context 'when kilometres have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'returns the highest number of kilometres walked in a day' do
+        expect(user.highest_kilometres).to eq('3.62'.to_d)
+      end
+    end
+  end
+
   describe '#highest_steps' do
     before { user.save! }
 
     context 'when no activities have been recorded' do
-      it 'returns a no steps recorded message' do
-        expect(user.highest_steps).to eq("No steps recorded")
+      it 'returns 0' do
+        expect(user.highest_steps).to eq(0)
       end
     end
 
