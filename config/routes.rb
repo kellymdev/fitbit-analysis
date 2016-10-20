@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '/upload_data', to: 'files#new', as: :file_upload
+
+  post '/upload', to: 'files#upload', as: :upload_file
 end
