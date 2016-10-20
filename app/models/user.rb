@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { in: 2..20 }
 
+  NO_STEPS_MESSAGE = "No steps recorded"
+
   def lifetime_floors
     activities.sum(&:floors)
   end
@@ -19,5 +21,23 @@ class User < ApplicationRecord
 
   def lifetime_steps
     activities.sum(&:steps)
+  end
+
+  def highest_steps
+    activity = highest_step_activity
+
+    activity ? activity.steps : NO_STEPS_MESSAGE
+  end
+
+  def highest_step_date
+    activity = highest_step_activity
+
+    activity ? activity.date : NO_STEPS_MESSAGE
+  end
+
+  private
+
+  def highest_step_activity
+    activities.max_by{ |activity| activity.steps }
   end
 end
