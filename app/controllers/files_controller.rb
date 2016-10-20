@@ -9,6 +9,6 @@ class FilesController < ApplicationController
 
     CreateDataFromFile.new(file.tempfile, current_user).call
 
-    redirect_to file_upload_path
+    redirect_to dashboard_path
   end
 end
