@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { in: 2..20 }
 
   NO_FLOORS_MESSAGE = "No floors recorded"
+  NO_KM_MESSAGE = "No kilometres recorded"
   NO_STEPS_MESSAGE = "No steps recorded"
 
   def lifetime_floors
@@ -40,6 +41,12 @@ class User < ApplicationRecord
     activity = highest_kilometre_activity
 
     activity ? activity.distance : 0
+  end
+
+  def highest_kilometre_date
+    activity = highest_kilometre_activity
+
+    activity ? activity.date : NO_KM_MESSAGE
   end
 
   def highest_steps
