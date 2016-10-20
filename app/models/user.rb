@@ -26,6 +26,14 @@ class User < ApplicationRecord
     activities.sum(&:steps)
   end
 
+  def average_floors
+    if lifetime_floors > 0
+      (lifetime_floors / activities.count).round(2)
+    else
+      lifetime_floors
+    end
+  end
+
   def highest_floors
     activity = highest_floor_activity
 
