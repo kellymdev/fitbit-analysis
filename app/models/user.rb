@@ -61,6 +61,18 @@ class User < ApplicationRecord
     activity ? activity.date : NO_STEPS_MESSAGE
   end
 
+  def lowest_floors
+    activity = lowest_floor_activity
+
+    activity ? activity.floors : 0
+  end
+
+  def lowest_floor_date
+    activity = lowest_floor_activity
+
+    activity ? activity.date : NO_FLOORS_MESSAGE
+  end
+
   private
 
   def highest_floor_activity
@@ -73,5 +85,9 @@ class User < ApplicationRecord
 
   def highest_step_activity
     activities.max_by { |activity| activity.steps }
+  end
+
+  def lowest_floor_activity
+    activities.min_by { |activity| activity.floors }
   end
 end
