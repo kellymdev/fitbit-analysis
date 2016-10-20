@@ -576,4 +576,77 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#highest_very_active_minutes' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'returns 0' do
+        expect(user.highest_very_active_minutes).to eq(0)
+      end
+    end
+
+    context 'when there have been no active minutes' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 0, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'returns 0' do
+        expect(user.highest_very_active_minutes).to eq(0)
+      end
+    end
+
+    context 'when there have been active minutes' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 18, minutes_very_active: 19, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 14, minutes_very_active: 31, activity_calories: 499)
+      end
+
+      it 'returns the highest very active minutes in a day' do
+        expect(user.highest_very_active_minutes).to eq(31)
+      end
+    end
+  end
+
+  describe '#highest_very_active_date' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'returns no activity recorded' do
+        expect(user.highest_very_active_date).to eq("No activity recorded")
+      end
+    end
+
+    context 'when there have been no active minutes' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 0, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'returns the date of the activity' do
+        expect(user.highest_very_active_date).to eq(Date.parse("01-10-2016"))
+      end
+    end
+
+    context 'when there have been active minutes' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 18, minutes_very_active: 19, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 14, minutes_very_active: 31, activity_calories: 499)
+      end
+
+      it 'returns the date with the most very active minutes' do
+        expect(user.highest_very_active_date).to eq(Date.parse("02-10-2016"))
+      end
+    end
+
+    context 'when two days have the same number of very active minutes' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 18, minutes_very_active: 31, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 14, minutes_very_active: 31, activity_calories: 499)
+      end
+
+      it 'returns the first date' do
+        expect(user.highest_very_active_date).to eq(Date.parse("01-10-2016"))
+      end
+    end
+  end
 end

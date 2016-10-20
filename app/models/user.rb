@@ -12,6 +12,7 @@ class User < ApplicationRecord
   NO_FLOORS_MESSAGE = "No floors recorded"
   NO_KM_MESSAGE = "No kilometres recorded"
   NO_STEPS_MESSAGE = "No steps recorded"
+  NO_ACTIVITY_MESSAGE = "No activity recorded"
 
   def lifetime_floors
     activities.sum(&:floors)
@@ -97,6 +98,18 @@ class User < ApplicationRecord
     activity ? activity.date : NO_KM_MESSAGE
   end
 
+  def highest_very_active_minutes
+    very_active = highest_very_active_activity
+
+    very_active ? very_active.minutes_very_active : 0
+  end
+
+  def highest_very_active_date
+    very_active = highest_very_active_activity
+
+    very_active ? very_active.date : NO_ACTIVITY_MESSAGE
+  end
+
   private
 
   def highest_floor_activity
@@ -121,5 +134,9 @@ class User < ApplicationRecord
 
   def lowest_kilometre_activity
     activities.min_by { |activity| activity.distance }
+  end
+
+  def highest_very_active_activity
+    activities.max_by { |activity| activity.minutes_very_active }
   end
 end
