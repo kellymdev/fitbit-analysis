@@ -85,6 +85,18 @@ class User < ApplicationRecord
     activity ? activity.date : NO_STEPS_MESSAGE
   end
 
+  def lowest_kilometres
+    activity = lowest_kilometre_activity
+
+    activity ? activity.distance : 0
+  end
+
+  def lowest_kilometre_date
+    activity = lowest_kilometre_activity
+
+    activity ? activity.date : NO_KM_MESSAGE
+  end
+
   private
 
   def highest_floor_activity
@@ -105,5 +117,9 @@ class User < ApplicationRecord
 
   def lowest_step_activity
     activities.min_by { |activity| activity.steps }
+  end
+
+  def lowest_kilometre_activity
+    activities.min_by { |activity| activity.distance }
   end
 end
