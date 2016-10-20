@@ -45,4 +45,79 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#lifetime_floors' do
+    before { user.save! }
+
+    context 'when no floors have been climbed' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 0, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'equals 0' do
+        expect(user.lifetime_floors).to eq(0)
+      end
+    end
+
+    context 'when floors have been climbed' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'equals the total number of floors climbed by the user' do
+        expect(user.lifetime_floors).to eq(30)
+      end
+    end
+  end
+
+  describe '#lifetime_kilometres' do
+    before { user.save! }
+
+    context 'when no kilometres have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "0.0".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'equals 0' do
+        expect(user.lifetime_kilometres).to eq(0)
+      end
+    end
+
+    context 'when kilometres have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'equals the total number of kilometres walked' do
+        expect(user.lifetime_kilometres).to eq('5.25'.to_d)
+      end
+    end
+  end
+
+  describe '#lifetime_steps' do
+    before { user.save! }
+
+    context 'when no steps have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 0, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'equals 0' do
+        expect(user.lifetime_steps).to eq(0)
+      end
+    end
+
+    context 'when steps have been walked' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'equals the total number of steps walked' do
+        expect(user.lifetime_steps).to eq(7942)
+      end
+    end
+  end
 end

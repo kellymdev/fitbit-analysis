@@ -8,4 +8,16 @@ class User < ApplicationRecord
   has_many :activities, dependent: :destroy
 
   validates :name, presence: true, length: { in: 2..20 }
+
+  def lifetime_floors
+    activities.sum(&:floors)
+  end
+
+  def lifetime_kilometres
+    activities.sum(&:distance)
+  end
+
+  def lifetime_steps
+    activities.sum(&:steps)
+  end
 end
