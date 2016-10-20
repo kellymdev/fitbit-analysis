@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Activity, type: :model do
+  describe 'associations' do
+    it { is_expected.to belong_to(:user) }
+  end
+
   describe 'validations' do
     describe 'calories_burned' do
       it 'is valid with calories of 0' do

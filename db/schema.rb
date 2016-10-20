@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161020012054) do
+ActiveRecord::Schema.define(version: 20161020014508) do
 
   create_table "activities", force: :cascade do |t|
     t.date     "date"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20161020012054) do
     t.integer  "activity_calories"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "user_id"
   end
 
   create_table "sleeps", force: :cascade do |t|
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 20161020012054) do
     t.integer  "time_in_bed"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|

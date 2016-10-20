@@ -1,10 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:name) { "Bob" }
+  let(:user) { User.new(name: name, email: "test@example.com", password: "test12") }
+
+  describe 'associations' do
+    it { is_expected.to have_many(:sleeps) }
+
+    it { is_expected.to have_many(:activities) }
+  end
+
   describe 'validations' do
     describe 'name' do
-      let(:user) { User.new(name: name, email: "test@example.com", password: "test12") }
-
       context 'with a 2 character name' do
         let(:name) { "Hi" }
 

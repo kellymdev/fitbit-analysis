@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Sleep, type: :model do
+  describe 'associations' do
+    it { is_expected.to belong_to(:user) }
+  end
+
   describe 'validations' do
     describe 'minutes_asleep' do
       it 'is valid with minutes of 0' do
