@@ -132,4 +132,36 @@ RSpec.describe Activity, type: :model do
       end
     end
   end
+
+  describe '#total_active_minutes' do
+    let(:lightly_active) { 0 }
+    let(:fairly_active) { 0 }
+    let(:very_active) { 0 }
+    let(:activity) { Activity.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: lightly_active, minutes_fairly_active: fairly_active, minutes_very_active: very_active, activity_calories: 354) }
+
+    context 'when there are no active minutes' do
+      it 'returns 0' do
+        expect(activity.total_active_minutes).to eq(0)
+      end
+    end
+
+    context 'when there are active minutes in some categories' do
+      let(:lightly_active) { 25 }
+      let(:fairly_active) { 5 }
+
+      it 'returns the sum across the categories' do
+        expect(activity.total_active_minutes).to eq(30)
+      end
+    end
+
+    context 'when there are active minutes across all categories' do
+      let(:lightly_active) { 45 }
+      let(:fairly_active) { 10 }
+      let(:very_active) { 7 }
+
+      it 'returns the sum across all the categories' do
+        expect(activity.total_active_minutes).to eq(62)
+      end
+    end
+  end
 end

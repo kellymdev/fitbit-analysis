@@ -147,6 +147,18 @@ class User < ApplicationRecord
     activity ? activity.date : NO_KM_MESSAGE
   end
 
+  def lowest_calories_burned
+    activity = lowest_calories_burned_activity
+
+    activity ? activity.calories_burned : 0
+  end
+
+  def lowest_calories_burned_date
+    activity = lowest_calories_burned_activity
+
+    activity ? activity.date : NO_CALORIES_MESSAGE
+  end
+
   def highest_very_active_minutes
     very_active = highest_very_active_activity
 
@@ -201,12 +213,16 @@ class User < ApplicationRecord
     activities.min_by { |activity| activity.distance }
   end
 
+  def lowest_calories_burned_activity
+    activities.min_by { |activity| activity.calories_burned }
+  end
+
   def highest_very_active_activity
     activities.max_by { |activity| activity.minutes_very_active }
   end
 
   def highest_active_activity
-    activities.max_by { |activity| activity.minutes_lightly_active + activity.minutes_fairly_active + activity.minutes_very_active }
+    activities.max_by { |activity| activity.total_active_minutes }
   end
 
   def highest_sedentary_activity
