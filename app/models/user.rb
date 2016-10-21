@@ -140,6 +140,12 @@ class User < ApplicationRecord
     activity ? activity.date : NO_ACTIVITY_MESSAGE
   end
 
+  def least_active_day
+    activity = highest_sedentary_activity
+
+    activity ? activity.date : NO_ACTIVITY_MESSAGE
+  end
+
   private
 
   def highest_floor_activity
@@ -172,5 +178,9 @@ class User < ApplicationRecord
 
   def highest_active_activity
     activities.max_by { |activity| activity.minutes_lightly_active + activity.minutes_fairly_active + activity.minutes_very_active }
+  end
+
+  def highest_sedentary_activity
+    activities.max_by { |activity| activity.minutes_sedentary }
   end
 end
