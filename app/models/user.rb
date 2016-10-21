@@ -13,6 +13,7 @@ class User < ApplicationRecord
   NO_KM_MESSAGE = "No kilometres recorded"
   NO_STEPS_MESSAGE = "No steps recorded"
   NO_ACTIVITY_MESSAGE = "No activity recorded"
+  NO_CALORIES_MESSAGE = "No calories recorded"
 
   def lifetime_floors
     activities.sum(&:floors)
@@ -98,6 +99,18 @@ class User < ApplicationRecord
     activity ? activity.date : NO_STEPS_MESSAGE
   end
 
+  def highest_calories_burned
+    activity = highest_calories_burned_activity
+
+    activity ? activity.calories_burned : 0
+  end
+
+  def highest_calories_burned_date
+    activity = highest_calories_burned_activity
+
+    activity ? activity.date : NO_CALORIES_MESSAGE
+  end
+
   def lowest_floors
     activity = lowest_floor_activity
 
@@ -170,6 +183,10 @@ class User < ApplicationRecord
 
   def highest_step_activity
     activities.max_by { |activity| activity.steps }
+  end
+
+  def highest_calories_burned_activity
+    activities.max_by { |activity| activity.calories_burned }
   end
 
   def lowest_floor_activity
