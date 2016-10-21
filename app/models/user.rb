@@ -30,6 +30,14 @@ class User < ApplicationRecord
     activities.sum(&:calories_burned)
   end
 
+  def average_calories_burned
+    if lifetime_calories_burned > 0
+      (lifetime_calories_burned / activities.count).round(2)
+    else
+      lifetime_calories_burned
+    end
+  end
+
   def average_floors
     if lifetime_floors > 0
       (lifetime_floors / activities.count).round(2)

@@ -139,6 +139,68 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#lifetime_calories_burned' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'equals 0' do
+        expect(user.lifetime_calories_burned).to eq(0)
+      end
+    end
+
+    context 'when no calories have been burned' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 0, steps: 0, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'equals 0' do
+        expect(user.lifetime_calories_burned).to eq(0)
+      end
+    end
+
+    context 'when calories have been burned' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'equals the total number of calories burned' do
+        expect(user.lifetime_calories_burned).to eq(2891)
+      end
+    end
+  end
+
+  describe '#average_calories_burned' do
+    before { user.save! }
+
+    context 'when no activities have been recorded' do
+      it 'returns 0' do
+        expect(user.average_calories_burned).to eq(0)
+      end
+    end
+
+    context 'when no calories have been burned' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 0, steps: 0, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+      end
+
+      it 'returns 0' do
+        expect(user.average_calories_burned).to eq(0)
+      end
+    end
+
+    context 'when calories have been burned' do
+      before do
+        user.activities.create!(date: Date.parse("01-10-2016"), calories_burned: 1388, steps: 2459, distance: "1.63".to_d, floors: 13, minutes_sedentary: 676, minutes_lightly_active: 163, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 354)
+        user.activities.create!(date: Date.parse("02-10-2016"), calories_burned: 1503, steps: 5483, distance: "3.62".to_d, floors: 17, minutes_sedentary: 633, minutes_lightly_active: 209, minutes_fairly_active: 0, minutes_very_active: 0, activity_calories: 499)
+      end
+
+      it 'returns the average calories burned' do
+        expect(user.average_calories_burned).to eq(1445)
+      end
+    end
+  end
+
   describe '#average_floors' do
     before { user.save! }
 
