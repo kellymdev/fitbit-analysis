@@ -1,0 +1,34 @@
+// Colours
+$light-brown: #D7C8B8;
+$dark-brown: #8A735B;
+$light-blue: #C2DAE3;
+$dark-blue: #596E7C;
+
+// Fonts
+$header-font: 'Raleway', sans-serif;
+$body-font: 'Open Sans', sans-serif;
+
+body {
+  background-color: $light-blue;
+  color: $dark-blue;
+  font-family: $body-font;
+}
+
+h2, h3 {
+  font-family: $header-font;
+  border-bottom: 1px solid $dark-brown;
+  color: $dark-brown;
+}
+
+.button {
+  text-decoration: none;
+  color: $dark-blue;
+  background-color: $light-brown;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px dotted $dark-blue;
+}
+
+.submit {
+  margin-top: 20px;
+}

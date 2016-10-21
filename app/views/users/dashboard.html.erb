@@ -1,6 +1,6 @@
 <h2>Dashboard for <%= current_user.name %></h2>
 
-<%= link_to "Upload Data", file_upload_path %>
+<%= link_to "Upload Data", file_upload_path, class: "button" %>
 
 <h3>Lifetime Achievements</h3>
 <p>Lifetime floors: <%= current_user.lifetime_floors %></p>
