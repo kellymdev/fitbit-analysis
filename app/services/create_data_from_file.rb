@@ -1,6 +1,8 @@
 class CreateDataFromFile
   require 'csv'
 
+  ROWS_TO_IGNORE = ["Activities", "Sleep", "Date", nil]
+
   def initialize(file, user)
     @file = file
     @user = user
@@ -21,7 +23,7 @@ class CreateDataFromFile
   private
 
   def ignore_row?(first_field)
-    first_field == "Activities" || first_field == "Sleep" || first_field == "Date" || first_field == nil
+    ROWS_TO_IGNORE.include?(first_field)
   end
 
   def activity_row?(row)
