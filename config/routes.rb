@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   post '/upload', to: 'files#upload', as: :upload_file
 
   get '/dashboard', to: 'users#dashboard', as: :dashboard
+
+  get 'graphs/floor_data', to: 'graphs#floor_data', defaults: { format: 'json' }
 end
