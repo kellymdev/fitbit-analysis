@@ -1,4 +1,6 @@
 class GraphsController < ApplicationController
+  before_action :authenticate_user!
+
   def floor_data
     respond_to do |format|
       format.json {
