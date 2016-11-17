@@ -58,7 +58,7 @@ function drawKms(data) {
       div.transition()
         .duration(200)
         .style("opacity", .9);
-      div.html(d.date + '<br/>' + d.distance)
+      div.html(d.date + '<br/>' + d.distance + ' km')
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY - 28) + "px");
     })
