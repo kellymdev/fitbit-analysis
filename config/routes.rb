@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get '/graphs/floor_data', to: 'graphs#floor_data', defaults: { format: 'json' }
 
   get '/graphs/step_data', to: 'graphs#step_data', defaults: { format: 'json' }
+
+  get '/graphs/km_data', to: 'graphs#km_data', defaults: { format: 'json' }
 end
