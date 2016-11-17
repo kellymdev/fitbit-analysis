@@ -4,12 +4,16 @@ $dark-brown: #8A735B;
 $light-blue: #C2DAE3;
 $dark-blue: #596E7C;
 
+// Fonts
+$header-font: 'Raleway', sans-serif;
+$body-font: 'Open Sans', sans-serif;
+
 .bar {
   fill: $dark-brown;
 }
 
 .axis text {
-  font: 10px sans-serif;
+  font: 10px $body-font;
 }
 
 .axis path,
@@ -27,10 +31,10 @@ div.tooltip {
   position: absolute;
   text-align: center;
   width: 80px;
-  height: 28px;
+  height: 34px;
   padding: 2px;
-  font: 12px sans-serif;
-  background: lightsteelblue;
+  font: 12px $body-font;
+  background: $light-brown;
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
