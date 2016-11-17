@@ -22,3 +22,16 @@ $dark-blue: #596E7C;
 .x.axis path {
   display: none;
 }
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 80px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}

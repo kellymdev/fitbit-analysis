@@ -21,6 +21,10 @@ function drawCalories(data) {
   var xAxis = d3.axisBottom().scale(x).ticks(d3.timeMondays, 1);
   var yAxis = d3.axisLeft().scale(y);
 
+  var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
   var chart = d3.select(".calorie-chart")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -30,15 +34,15 @@ function drawCalories(data) {
   x.domain(data.map(function(d) { return d.date; }));
   y.domain([0, d3.max(data, function(d) { return d.calories_burned; })]);
 
-  chart.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis)
-    .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", "-.55em")
-    .attr("transform", "rotate(-90)" );
+  // chart.append("g")
+  //   .attr("class", "x axis")
+  //   .attr("transform", "translate(0," + height + ")")
+  //   .call(xAxis)
+  //   .selectAll("text")
+  //   .style("text-anchor", "end")
+  //   .attr("dx", "-.8em")
+  //   .attr("dy", "-.55em")
+  //   .attr("transform", "rotate(-90)" );
 
   chart.append("g")
     .attr("class", "y axis")
@@ -48,7 +52,7 @@ function drawCalories(data) {
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Floors climbed");
+    .text("Calories burned");
 
   chart.selectAll(".bar")
     .data(data)
@@ -58,12 +62,21 @@ function drawCalories(data) {
     .attr("y", function(d) { return y(d.calories_burned); })
     .attr("height", function(d) { return height - y(d.calories_burned); })
     .attr("width", 5)
-    .on('mouseover', function(data) {
+    .on('mouseover', function(d) {
       d3.select(this)
-      .style('fill', '#596E7C')
+        .style('fill', '#596E7C');
+      div.transition()
+        .duration(200)
+        .style("opacity", .9);
+      div.html(d.date + '<br/>' + d.calories_burned)
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
     })
-    .on('mouseout', function(data) {
+    .on('mouseout', function(d) {
       d3.select(this)
-      .style('fill', '#8A735B')
+        .style('fill', '#8A735B');
+      div.transition()
+        .duration(500)
+        .style("opacity", 0);
     });
 }
