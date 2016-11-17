@@ -38,7 +38,7 @@ function drawCalories(data) {
     .style("text-anchor", "end")
     .attr("dx", "-.8em")
     .attr("dy", "-.55em")
-    .attr("transform", "rotate(-90)" );;
+    .attr("transform", "rotate(-90)" );
 
   chart.append("g")
     .attr("class", "y axis")
@@ -48,7 +48,7 @@ function drawCalories(data) {
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Floors climbed");;
+    .text("Floors climbed");
 
   chart.selectAll(".bar")
     .data(data)
@@ -57,7 +57,15 @@ function drawCalories(data) {
     .attr("x", function(d) { return x(d.date); })
     .attr("y", function(d) { return y(d.calories_burned); })
     .attr("height", function(d) { return height - y(d.calories_burned); })
-    .attr("width", 5);
+    .attr("width", 5)
+    .on('mouseover', function(data) {
+      d3.select(this)
+      .style('fill', '#596E7C')
+    })
+    .on('mouseout', function(data) {
+      d3.select(this)
+      .style('fill', '#8A735B')
+    });
 }
 
 function type(d) {
