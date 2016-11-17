@@ -30,4 +30,12 @@ class GraphsController < ApplicationController
       }
     end
   end
+
+  def activity_data
+    respond_to do |format|
+      format.json {
+        render json: current_user.activities.order(:date).as_json(only: [:date, :minutes_sedentary, :minutes_lightly_active, :minutes_fairly_active, :minutes_very_active])
+      }
+    end
+  end
 end

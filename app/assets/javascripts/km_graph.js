@@ -18,7 +18,7 @@ function drawKms(data) {
 
   var x = d3.scaleBand().rangeRound([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
-  var xAxis = d3.axisBottom().scale(x).ticks(d3.timeMondays, 1);
+  var xAxis = d3.axisBottom().scale(x);
   var yAxis = d3.axisLeft().scale(y);
 
   var div = d3.select("body").append("div")
@@ -33,16 +33,6 @@ function drawKms(data) {
 
   x.domain(data.map(function(d) { return d.date; }));
   y.domain([0, d3.max(data, function(d) { return d.distance; })]);
-
-  // chart.append("g")
-  //   .attr("class", "x axis")
-  //   .attr("transform", "translate(0," + height + ")")
-  //   .call(xAxis)
-  //   .selectAll("text")
-  //   .style("text-anchor", "end")
-  //   .attr("dx", "-.8em")
-  //   .attr("dy", "-.55em")
-  //   .attr("transform", "rotate(-90)" );
 
   chart.append("g")
     .attr("class", "y axis")
