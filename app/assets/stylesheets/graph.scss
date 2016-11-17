@@ -12,7 +12,8 @@ $body-font: 'Open Sans', sans-serif;
   fill: $dark-brown;
 }
 
-.axis text {
+.axis text,
+.legend {
   font: 10px $body-font;
 }
 
