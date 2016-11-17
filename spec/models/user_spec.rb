@@ -294,6 +294,37 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#average_minutes_asleep' do
+    before { user.save! }
+
+    context 'when no sleeps have been recorded' do
+      it 'returns 0' do
+        expect(user.average_steps).to eq(0)
+      end
+    end
+
+    context 'when there have been no minutes asleep' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 0, minutes_awake: 93, number_of_awakenings: 1, time_in_bed: 510)
+      end
+
+      it 'returns 0' do
+        expect(user.average_steps).to eq(0)
+      end
+    end
+
+    context 'when there have been minutes asleep' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 417, minutes_awake: 84, number_of_awakenings: 1, time_in_bed: 510)
+        user.sleeps.create!(date: Date.parse("02-09-2016"), minutes_asleep: 389, minutes_awake: 93, number_of_awakenings: 3, time_in_bed: 482)
+      end
+
+      it 'returns the average minutes asleep per day' do
+        expect(user.average_minutes_asleep).to eq(403)
+      end
+    end
+  end
+
   describe '#average_steps' do
     before { user.save! }
 

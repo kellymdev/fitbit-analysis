@@ -59,6 +59,14 @@ class User < ApplicationRecord
     end
   end
 
+  def average_minutes_asleep
+    if lifetime_minutes_asleep > 0
+      (lifetime_minutes_asleep / sleeps.count).round(2)
+    else
+      lifetime_minutes_asleep
+    end
+  end
+
   def average_steps
     if lifetime_steps > 0
       (lifetime_steps / activities.count).round(2)
