@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   get '/graphs/step_data', to: 'graphs#step_data', defaults: { format: 'json' }
 
   get '/graphs/km_data', to: 'graphs#km_data', defaults: { format: 'json' }
+
+  get '/graphs/calorie_data', to: 'graphs#calorie_data', defaults: { format: 'json' }
 end
