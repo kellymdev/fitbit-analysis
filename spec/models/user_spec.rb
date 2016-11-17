@@ -170,6 +170,37 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#lifetime_minutes_asleep' do
+    before { user.save! }
+
+    context 'when no sleeps have been recorded' do
+      it 'equals 0' do
+        expect(user.lifetime_minutes_asleep).to eq(0)
+      end
+    end
+
+    context 'when there have been no minutes asleep' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 0, minutes_awake: 93, number_of_awakenings: 1, time_in_bed: 510)
+      end
+
+      it 'equals 0' do
+        expect(user.lifetime_minutes_asleep).to eq(0)
+      end
+    end
+
+    context 'when there have been minutes asleep' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 417, minutes_awake: 84, number_of_awakenings: 1, time_in_bed: 510)
+        user.sleeps.create!(date: Date.parse("02-09-2016"), minutes_asleep: 389, minutes_awake: 93, number_of_awakenings: 3, time_in_bed: 482)
+      end
+
+      it 'equals the total number of minutes asleep' do
+        expect(user.lifetime_minutes_asleep).to eq(806)
+      end
+    end
+  end
+
   describe '#average_calories_burned' do
     before { user.save! }
 

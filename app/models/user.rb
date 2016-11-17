@@ -30,6 +30,10 @@ class User < ApplicationRecord
   def lifetime_calories_burned
     activities.sum(&:calories_burned)
   end
+  
+  def lifetime_minutes_asleep
+    sleeps.sum(&:minutes_asleep)
+  end
 
   def average_calories_burned
     if lifetime_calories_burned > 0
