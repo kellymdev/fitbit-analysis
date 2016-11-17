@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:name) { "Bob" }
-  let(:user) { User.new(name: name, email: "test@example.com", password: "test12") }
+  let(:user) { User.create!(name: "Bob", email: "test@example.com", password: "test12") }
 
   describe 'associations' do
     it { is_expected.to have_many(:sleeps) }
@@ -12,6 +11,8 @@ RSpec.describe User, type: :model do
 
   describe 'validations' do
     describe 'name' do
+      let(:user) { User.new(name: name, email: "test@example.com", password: "test12") }
+
       context 'with a 2 character name' do
         let(:name) { "Hi" }
 
@@ -47,8 +48,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lifetime_floors' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'equals 0' do
         expect(user.lifetime_floors).to eq(0)
@@ -78,8 +77,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lifetime_kilometres' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'equals 0' do
         expect(user.lifetime_kilometres).to eq(0)
@@ -109,8 +106,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lifetime_steps' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'equals 0' do
         expect(user.lifetime_steps).to eq(0)
@@ -140,8 +135,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lifetime_calories_burned' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'equals 0' do
         expect(user.lifetime_calories_burned).to eq(0)
@@ -171,8 +164,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lifetime_minutes_asleep' do
-    before { user.save! }
-
     context 'when no sleeps have been recorded' do
       it 'equals 0' do
         expect(user.lifetime_minutes_asleep).to eq(0)
@@ -202,8 +193,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#average_calories_burned' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.average_calories_burned).to eq(0)
@@ -233,8 +222,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#average_floors' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.average_floors).to eq(0)
@@ -264,8 +251,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#average_kilometres' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.average_kilometres).to eq(0)
@@ -295,8 +280,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#average_minutes_asleep' do
-    before { user.save! }
-
     context 'when no sleeps have been recorded' do
       it 'returns 0' do
         expect(user.average_steps).to eq(0)
@@ -326,8 +309,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#average_steps' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.average_steps).to eq(0)
@@ -357,8 +338,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_floors' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.highest_floors).to eq(0)
@@ -388,8 +367,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_floor_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns a no floors climbed message' do
         expect(user.highest_floor_date).to eq("No floors recorded")
@@ -430,8 +407,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_kilometres' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.highest_kilometres).to eq(0)
@@ -461,8 +436,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_kilometre_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns a no kilometres recorded message' do
         expect(user.highest_kilometre_date).to eq('No kilometres recorded')
@@ -503,8 +476,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_steps' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.highest_steps).to eq(0)
@@ -534,8 +505,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_step_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns a no steps recorded message' do
         expect(user.highest_step_date).to eq("No steps recorded")
@@ -576,8 +545,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_calories_burned' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.highest_calories_burned).to eq(0)
@@ -607,8 +574,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_calories_burned_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns a no calories message' do
         expect(user.highest_calories_burned_date).to eq('No calories recorded')
@@ -649,8 +614,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_floors' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.lowest_floors).to eq(0)
@@ -680,8 +643,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_floor_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns a no floors message' do
         expect(user.lowest_floor_date).to eq("No floors recorded")
@@ -722,8 +683,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_steps' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.lowest_steps).to eq(0)
@@ -753,8 +712,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_step_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns no steps recorded' do
         expect(user.lowest_step_date).to eq("No steps recorded")
@@ -795,8 +752,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_kilometres' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.lowest_kilometres).to eq(0)
@@ -826,8 +781,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_kilometre_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns a no kilometres message' do
         expect(user.lowest_kilometre_date).to eq("No kilometres recorded")
@@ -868,8 +821,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_calories_burned' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.lowest_calories_burned).to eq(0)
@@ -899,8 +850,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#lowest_calories_burned_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns a no calories message' do
         expect(user.lowest_calories_burned_date).to eq("No calories recorded")
@@ -941,8 +890,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_very_active_minutes' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns 0' do
         expect(user.highest_very_active_minutes).to eq(0)
@@ -972,8 +919,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#highest_very_active_date' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns no activity recorded' do
         expect(user.highest_very_active_date).to eq("No activity recorded")
@@ -1014,8 +959,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#most_active_day' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns no activity recorded' do
         expect(user.most_active_day).to eq("No activity recorded")
@@ -1056,8 +999,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#least_active_day' do
-    before { user.save! }
-
     context 'when no activities have been recorded' do
       it 'returns no activity recorded' do
         expect(user.least_active_day).to eq("No activity recorded")
