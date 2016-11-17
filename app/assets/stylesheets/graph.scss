@@ -1,5 +1,11 @@
+// Colours
+$light-brown: #D7C8B8;
+$dark-brown: #8A735B;
+$light-blue: #C2DAE3;
+$dark-blue: #596E7C;
+
 .bar {
-  fill: steelblue;
+  fill: $dark-brown;
 }
 
 .axis text {
@@ -9,7 +15,7 @@
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: $dark-blue;
   shape-rendering: crispEdges;
 }
 

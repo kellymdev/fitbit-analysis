@@ -18,7 +18,7 @@ function draw(data) {
 
   var x = d3.scaleBand().rangeRound([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
-  var xAxis = d3.axisBottom().scale(x);
+  var xAxis = d3.axisBottom().scale(x).ticks(d3.timeMondays, 1);
   var yAxis = d3.axisLeft().scale(y);
 
   var chart = d3.select(".chart")
@@ -33,7 +33,12 @@ function draw(data) {
   chart.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
+    .call(xAxis)
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", "-.55em")
+    .attr("transform", "rotate(-90)" );;
 
   chart.append("g")
     .attr("class", "y axis")
