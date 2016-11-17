@@ -67,10 +67,3 @@ function drawSteps(data) {
       .style('fill', '#8A735B')
     });
 }
-
-function type(d) {
-  d.value = +d.value;
-  return d;
-}
-
-
