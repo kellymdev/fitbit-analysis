@@ -54,7 +54,7 @@ function drawFloors(data) {
     .attr("width", 5)
     .on('mouseover', function(d) {
       d3.select(this)
-        .style('fill', '#596E7C');
+        .style('fill', '#94A7AD');
       div.transition()
         .duration(200)
         .style("opacity", .9);
