@@ -1,17 +1,17 @@
 $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
-        url: 'graphs/floor_data',
+        url: 'graphs/step_data',
         dataType: 'json',
         success: function (data) {
-          drawFloors(data);
+          drawSteps(data);
         },
         error: function (result) {
           error();
         }
       });
 
-function drawFloors(data) {
+function drawSteps(data) {
   var margin = {top: 20, right: 30, bottom: 30, left: 40};
   var width = 960 - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
@@ -21,14 +21,14 @@ function drawFloors(data) {
   var xAxis = d3.axisBottom().scale(x).ticks(d3.timeMondays, 1);
   var yAxis = d3.axisLeft().scale(y);
 
-  var chart = d3.select(".floor-chart")
+  var chart = d3.select(".step-chart")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   x.domain(data.map(function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.floors; })]);
+  y.domain([0, d3.max(data, function(d) { return d.steps; })]);
 
   chart.append("g")
     .attr("class", "x axis")
@@ -55,8 +55,8 @@ function drawFloors(data) {
     .enter().append("rect")
     .attr("class", "bar")
     .attr("x", function(d) { return x(d.date); })
-    .attr("y", function(d) { return y(d.floors); })
-    .attr("height", function(d) { return height - y(d.floors); })
+    .attr("y", function(d) { return y(d.steps); })
+    .attr("height", function(d) { return height - y(d.steps); })
     .attr("width", 5);
 }
 

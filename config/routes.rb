@@ -8,5 +8,7 @@ Rails.application.routes.draw do
 
   get '/dashboard', to: 'users#dashboard', as: :dashboard
 
-  get 'graphs/floor_data', to: 'graphs#floor_data', defaults: { format: 'json' }
+  get '/graphs/floor_data', to: 'graphs#floor_data', defaults: { format: 'json' }
+
+  get '/graphs/step_data', to: 'graphs#step_data', defaults: { format: 'json' }
 end
