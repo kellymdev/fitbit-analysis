@@ -221,6 +221,35 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#lifetime_awakenings' do
+    context 'when no sleeps have been recorded' do
+      it 'equals 0' do
+        expect(user.lifetime_awakenings).to eq(0)
+      end
+    end
+
+    context 'when there have been no awakenings' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 417, minutes_awake: 0, number_of_awakenings: 0, time_in_bed: 510)
+      end
+
+      it 'equals 0' do
+        expect(user.lifetime_awakenings).to eq(0)
+      end
+    end
+
+    context 'when there have been awakenings' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 417, minutes_awake: 84, number_of_awakenings: 1, time_in_bed: 510)
+        user.sleeps.create!(date: Date.parse("02-09-2016"), minutes_asleep: 389, minutes_awake: 93, number_of_awakenings: 3, time_in_bed: 482)
+      end
+
+      it 'equals the total number of awakenings' do
+        expect(user.lifetime_awakenings).to eq(4)
+      end
+    end
+  end
+
   describe '#average_calories_burned' do
     context 'when no activities have been recorded' do
       it 'returns 0' do
@@ -331,7 +360,7 @@ RSpec.describe User, type: :model do
         user.sleeps.create!(date: Date.parse("02-09-2016"), minutes_asleep: 389, minutes_awake: 93, number_of_awakenings: 3, time_in_bed: 482)
       end
 
-      it 'returns the average minutes asleep per day' do
+      it 'returns the average minutes asleep per night' do
         expect(user.average_minutes_asleep).to eq(403)
       end
     end
@@ -360,8 +389,37 @@ RSpec.describe User, type: :model do
         user.sleeps.create!(date: Date.parse("02-09-2016"), minutes_asleep: 389, minutes_awake: 93, number_of_awakenings: 3, time_in_bed: 482)
       end
 
-      it 'returns the average minutes awake per day' do
+      it 'returns the average minutes awake per night' do
         expect(user.average_minutes_awake).to eq(88)
+      end
+    end
+  end
+
+  describe '#average_awakenings' do
+    context 'when no sleeps have been recorded' do
+      it 'returns 0' do
+        expect(user.average_awakenings).to eq(0)
+      end
+    end
+
+    context 'when there have been no awakenings' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 480, minutes_awake: 0, number_of_awakenings: 0, time_in_bed: 510)
+      end
+
+      it 'returns 0' do
+        expect(user.average_awakenings).to eq(0)
+      end
+    end
+
+    context 'when there have been awakenings' do
+      before do
+        user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 417, minutes_awake: 84, number_of_awakenings: 1, time_in_bed: 510)
+        user.sleeps.create!(date: Date.parse("02-09-2016"), minutes_asleep: 389, minutes_awake: 93, number_of_awakenings: 3, time_in_bed: 482)
+      end
+
+      it 'returns the average awakenings per night' do
+        expect(user.average_awakenings).to eq(2)
       end
     end
   end

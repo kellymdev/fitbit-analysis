@@ -39,6 +39,10 @@ class User < ApplicationRecord
     sleeps.sum(&:minutes_awake)
   end
 
+  def lifetime_awakenings
+    sleeps.sum(&:number_of_awakenings)
+  end
+
   def average_calories_burned
     if lifetime_calories_burned > 0
       (lifetime_calories_burned / activities.count).round(2)
@@ -76,6 +80,14 @@ class User < ApplicationRecord
       (lifetime_minutes_awake / sleeps.count).round(2)
     else
       lifetime_minutes_awake
+    end
+  end
+
+  def average_awakenings
+    if lifetime_awakenings > 0
+      (lifetime_awakenings / sleeps.count).round(2)
+    else
+      lifetime_awakenings
     end
   end
 
