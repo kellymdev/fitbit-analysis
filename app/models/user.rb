@@ -47,68 +47,44 @@ class User < ApplicationRecord
     sleeps.sum(&:time_in_bed)
   end
 
-  def average_calories_burned
-    if lifetime_calories_burned > 0
-      (lifetime_calories_burned / activities.count).round(2)
+  def calculate_average(sum_of_values, total_number)
+    if sum_of_values > 0
+      (sum_of_values / total_number).round(2)
     else
-      lifetime_calories_burned
+      sum_of_values
     end
+  end
+
+  def average_calories_burned
+    calculate_average(lifetime_calories_burned, activities.count)
   end
 
   def average_floors
-    if lifetime_floors > 0
-      (lifetime_floors / activities.count).round(2)
-    else
-      lifetime_floors
-    end
+    calculate_average(lifetime_floors, activities.count)
   end
 
   def average_kilometres
-    if lifetime_kilometres > 0
-      (lifetime_kilometres / activities.count).round(2)
-    else
-      lifetime_kilometres
-    end
+    calculate_average(lifetime_kilometres, activities.count)
   end
 
   def average_minutes_asleep
-    if lifetime_minutes_asleep > 0
-      (lifetime_minutes_asleep / sleeps.count).round(2)
-    else
-      lifetime_minutes_asleep
-    end
+    calculate_average(lifetime_minutes_asleep, sleeps.count)
   end
 
   def average_minutes_awake
-    if lifetime_minutes_awake > 0
-      (lifetime_minutes_awake / sleeps.count).round(2)
-    else
-      lifetime_minutes_awake
-    end
+    calculate_average(lifetime_minutes_awake, sleeps.count)
   end
 
   def average_awakenings
-    if lifetime_awakenings > 0
-      (lifetime_awakenings / sleeps.count).round(2)
-    else
-      lifetime_awakenings
-    end
+    calculate_average(lifetime_awakenings, sleeps.count)
   end
 
   def average_time_in_bed
-    if lifetime_time_in_bed > 0
-      (lifetime_time_in_bed / sleeps.count).round(2)
-    else
-      lifetime_time_in_bed
-    end
+    calculate_average(lifetime_time_in_bed, sleeps.count)
   end
 
   def average_steps
-    if lifetime_steps > 0
-      (lifetime_steps / activities.count).round(2)
-    else
-      lifetime_steps
-    end
+    calculate_average(lifetime_steps, activities.count)
   end
 
   def highest_floors
