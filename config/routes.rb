@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   get '/graphs/activity_data', to: 'graphs#activity_data', defaults: { format: 'json' }
 
   get '/graphs/sleep_data', to: 'graphs#sleep_data', defaults: { format: 'json' }
+
+  get '/graphs/awakening_data', to: 'graphs#awakening_data', defaults: { format: 'json' }
 end

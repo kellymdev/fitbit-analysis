@@ -48,4 +48,12 @@ class GraphsController < ApplicationController
       }
     end
   end
+
+  def awakening_data
+    respond_to do |format|
+      format.json {
+        render json: current_user.sleeps.order(:date).as_json(only: [:date, :number_of_awakenings])
+      }
+    end
+  end
 end
