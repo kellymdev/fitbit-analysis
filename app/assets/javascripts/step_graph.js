@@ -36,13 +36,16 @@ function drawSteps(data) {
 
   chart.append("g")
     .attr("class", "y axis")
-    .call(yAxis)
-    .append("text")
+    .call(yAxis);
+
+  chart.append("text")
+    .attr("class", "axis-label")
     .attr("transform", "rotate(-90)")
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Steps");
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Steps walked");
 
   chart.selectAll(".bar")
     .data(data)

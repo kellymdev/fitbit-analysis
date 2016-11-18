@@ -19,4 +19,4 @@ Graphs show a users progress over time.
 ![Sleep Graph](sleep-graph.png)
 
 ## Technical Details
-Written in Ruby on Rails. The D3 Javascript library is used render the graphs.
+Written in Ruby on Rails. The d3.js Javascript library is used to render the graphs.
