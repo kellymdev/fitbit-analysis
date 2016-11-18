@@ -59,4 +59,19 @@ RSpec.describe GraphsController, type: :controller do
       expect(response.body).to eq(expected_data)
     end
   end
+
+  describe '#sleep_data' do
+    before do
+      user.sleeps.create!(date: Date.parse("01-09-2016"), minutes_asleep: 417, minutes_awake: 84, number_of_awakenings: 1, time_in_bed: 510)
+      user.sleeps.create!(date: Date.parse("02-09-2016"), minutes_asleep: 389, minutes_awake: 93, number_of_awakenings: 3, time_in_bed: 482)
+
+      get :sleep_data, params: { format: :json }
+    end
+
+    it 'provides sleep data from the users sleeps' do
+      expected_data = user.sleeps.order(:date).as_json(only: [:date, :minutes_asleep, :minutes_awake]).to_json
+
+      expect(response.body).to eq(expected_data)
+    end
+  end
 end

@@ -1,29 +1,29 @@
 $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
-        url: 'graphs/activity_data',
+        url: 'graphs/sleep_data',
         dataType: 'json',
         success: function (data) {
-          drawActivityStack(data);
+          drawSleepStack(data);
         },
         error: function (result) {
           error();
         }
       });
 
-function drawActivityStack(data) {
+function drawSleepStack(data) {
   var margin = {top: 20, right: 100, bottom: 30, left: 40};
   var width = 960 - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
 
   var x = d3.scaleBand().rangeRound([0, width]);
   var y = d3.scaleLinear().rangeRound([height, 0]);
-  var colour = d3.scaleOrdinal().range(["#D7C8B8", "#94A7AD", "#8A735B", "#596E7C"]);
+  var colour = d3.scaleOrdinal().range(["#D7C8B8", "#8A735B"]);
 
   var xAxis = d3.axisBottom().scale(x);
   var yAxis = d3.axisLeft().scale(y);
 
-  var chart = d3.select(".activity-chart-stacked")
+  var chart = d3.select(".sleep-chart-stacked")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -33,8 +33,8 @@ function drawActivityStack(data) {
 
   data.forEach(function(d) {
     var y0 = 0;
-    d.activity = colour.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-    d.total = d.activity[d.activity.length - 1].y1;
+    d.sleep = colour.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+    d.total = d.sleep[d.sleep.length - 1].y1;
   });
 
   x.domain(data.map(function(d) { return d.date; }));
@@ -50,14 +50,14 @@ function drawActivityStack(data) {
     .style("text-anchor", "end")
     .text("Minutes");
 
-  var activity = chart.selectAll(".date")
+  var sleep = chart.selectAll(".date")
     .data(data)
     .enter().append("g")
     .attr("class", "g")
     .attr("transform", function(d) { return "translate(" + x(d.date) + ",0)"; });
 
-  activity.selectAll("rect")
-    .data(function(d) { return d.activity; })
+  sleep.selectAll("rect")
+    .data(function(d) { return d.sleep; })
     .enter().append("rect")
     .attr("width", 5)
     .attr("y", function(d) { return y(d.y1); })
@@ -83,10 +83,8 @@ function drawActivityStack(data) {
     .style("text-anchor", "end")
     .text(function(d, i) {
       switch (i) {
-        case 0: return "Very active";
-        case 1: return "Fairly active";
-        case 2: return "Lightly active";
-        case 3: return "Sedentary";
+        case 0: return "Awake";
+        case 1: return "Asleep";
       }
   });
 }
