@@ -1,7 +1,6 @@
 # Fitbit Analysis
 
-A tool for analysing fitbit data and graphing the results. Data is uploaded as csv data from the Fitbit site.
-
+A tool for analysing Fitbit data and graphing the results. CSV data (available on the Fitbit site) can be uploaded and analysed.
 
 ## Calculations
 Various calculations are performed on the data, including:
@@ -11,7 +10,8 @@ Various calculations are performed on the data, including:
 * Lowest day calculations for Steps, Calories, Floors and Distance.
 
 ## Graphs
-Graphs are provided to show progress over time.
+Graphs show a users progress over time.
+
 ![Steps Graph](steps-graph.png)
 
 ![Activity Graph](activity-graph.png)
@@ -19,4 +19,4 @@ Graphs are provided to show progress over time.
 ![Sleep Graph](sleep-graph.png)
 
 ## Technical Details
-Written in Ruby on Rails, using D3 for the graphs.
+Written in Ruby on Rails. The D3 Javascript library is used render the graphs.
